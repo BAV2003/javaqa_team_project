@@ -100,7 +100,7 @@ public class PlayerTest {
         player.play(game3, 1);
 
         String expected = "Кольца";
-        Game actual = player.mostPlayerByGenre("Аркады");
+        String actual = player.mostPlayerByGenre("Аркады");
         assertEquals(expected, actual);
     }
 
