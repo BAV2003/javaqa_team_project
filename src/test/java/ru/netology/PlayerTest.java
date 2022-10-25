@@ -35,6 +35,23 @@ public class PlayerTest {
     }
 
     @Test
+
+    public void shouldIfInstallTwoGame() {
+        GameStore store = new GameStore();
+        Game game1 = store.publishGame("Кольца", "Аркады");
+        Game game2 = store.publishGame("Утки", "Стратегия");
+
+        Player player = new Player("Вася");
+        player.installGame(game1);
+        player.installGame(game2);
+
+        int expected = 3;
+        int actual = player.play(game2, 3);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void shouldDoubleInstallGame() {
         GameStore store = new GameStore();
         Game game = store.publishGame("Кольца", "Аркады");
@@ -85,6 +102,26 @@ public class PlayerTest {
     }
 
     @Test
+    public void shouldSumGenreIfHoursZero() {
+        GameStore store = new GameStore();
+        Game game1 = store.publishGame("Нетология Баттл Онлайн", "Аркады");
+        Game game2 = store.publishGame("Кольца", "Аркады");
+        Game game3 = store.publishGame("Утки", "Стратегия");
+
+        Player player = new Player("Petya");
+        player.installGame(game1);
+        player.installGame(game2);
+        player.installGame(game3);
+        player.play(game1, 0);
+        player.play(game2, 0);
+        player.play(game3, 0);
+
+        int expected = 0;
+        int actual = player.sumGenre("Аркады");
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void shouldMostPlayerByGenre() {
         GameStore store = new GameStore();
         Game game1 = store.publishGame("Нетология Баттл Онлайн", "Аркады");
@@ -102,6 +139,24 @@ public class PlayerTest {
         String expected = "Кольца";
         String actual = player.mostPlayerByGenre("Аркады");
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldMostPlayerByGenreIfHoursZero() {
+        GameStore store = new GameStore();
+        Game game1 = store.publishGame("Нетология Баттл Онлайн", "Аркады");
+        Game game2 = store.publishGame("Кольца", "Аркады");
+        Game game3 = store.publishGame("Утки", "Стратегия");
+
+        Player player = new Player("Petya");
+        player.installGame(game1);
+        player.installGame(game2);
+        player.installGame(game3);
+        player.play(game1, 0);
+        player.play(game2, 0);
+        player.play(game3, 0);
+
+        Assertions.assertNull(player.mostPlayerByGenre("Аркады"));
     }
 
     @Test
